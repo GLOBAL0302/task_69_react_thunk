@@ -1,27 +1,39 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { fetchTvShows } from './searchFormThunk.ts';
 
 const initialState = {
-    tvShow:"",
-    loadingShow:false
-}
-
+  tvShows: [],
+  tvShowName: '',
+  loadingShow: false,
+};
 
 export const searchFormSlice = createSlice({
-    name: "search",
-    initialState,
-    reducers:{
-        onChangeTvShow:(state, {payload}:PayloadAction<string>, )=>{
-            state.tvShow = payload;
-        }
+  name: 'search',
+  initialState,
+  reducers: {
+    onChangeTvShow: (state, { payload }: PayloadAction<string>) => {
+      state.tvShowName = payload;
     },
-    extraReducers:()=>{
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchTvShows.pending, (state) => {
+        state.loadingShow = true;
+      })
+      .addCase(fetchTvShows.fulfilled, (state, { payload }) => {
+        state.loadingShow = false;
+        state.tvShows = payload;
+      })
+      .addCase(fetchTvShows.rejected, (state) => {
+        state.loadingShow = false;
+      });
+  },
+  selectors: {
+    selectTvShowName: (state) => state.tvShowName,
+    selectTvShows: (state) => state.tvShows,
+  },
+});
 
-    },
-    selectors:{
-        selectTvShow:(state)=> state.tvShow,
-    }
-})
-
-export const searchReducer = searchFormSlice.reducer
-export const {onChangeTvShow} = searchFormSlice.actions;
-export const {selectTvShow} = searchFormSlice.selectors;
+export const searchReducer = searchFormSlice.reducer;
+export const { onChangeTvShow } = searchFormSlice.actions;
+export const { selectTvShowName, selectTvShows } = searchFormSlice.selectors;

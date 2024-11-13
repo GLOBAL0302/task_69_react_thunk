@@ -1,10 +1,11 @@
+import TvShow from '../../components/TvShow/TvShow.tsx';
 
 const HomeContainer = () => {
-    return (
-        <>
-
-        </>
-    );
+  return (
+    <>
+      <TvShow />
+    </>
+  );
 };
 
 export default HomeContainer;
