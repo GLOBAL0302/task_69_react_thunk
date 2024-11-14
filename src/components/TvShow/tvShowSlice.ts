@@ -32,9 +32,10 @@ export const tvShowSlice = createSlice({
   },
   selectors: {
     selectTvShow: (state) => state.tvShow,
+    selectTvShowLoading:(state)=>state.loading
   },
 });
 
 export const tvShowReducer = tvShowSlice.reducer;
 export const {} = tvShowSlice.actions;
-export const { selectTvShow } = tvShowSlice.selectors;
+export const { selectTvShow,selectTvShowLoading } = tvShowSlice.selectors;
